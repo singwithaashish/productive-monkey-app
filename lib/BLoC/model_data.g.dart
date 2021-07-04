@@ -17,21 +17,22 @@ class ProjectBlueprintAdapter extends TypeAdapter<ProjectBlueprint> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ProjectBlueprint()
-      ..projectName = fields[0] as String?
+      ..projectName = fields[0] as String
       ..totalTasks = fields[1] as int
       ..completedTasks = fields[2] as int
       ..dateCreated = fields[3] as DateTime
       ..deadline = fields[4] as DateTime
       ..priority = fields[5] as int
-      ..allTasks = (fields[6] as List?)?.cast<String>()
-      ..allTasksDone = (fields[7] as List?)?.cast<String>()
-      ..projectDescription = fields[8] as String?;
+      ..allTasks = (fields[6] as List).cast<String>()
+      ..allTasksDone = (fields[7] as List).cast<String>()
+      ..projectDescription = fields[8] as String?
+      ..totalSecondsSpent = fields[9] as int;
   }
 
   @override
   void write(BinaryWriter writer, ProjectBlueprint obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.projectName)
       ..writeByte(1)
@@ -49,7 +50,9 @@ class ProjectBlueprintAdapter extends TypeAdapter<ProjectBlueprint> {
       ..writeByte(7)
       ..write(obj.allTasksDone)
       ..writeByte(8)
-      ..write(obj.projectDescription);
+      ..write(obj.projectDescription)
+      ..writeByte(9)
+      ..write(obj.totalSecondsSpent);
   }
 
   @override
@@ -243,17 +246,18 @@ class TasksAdapter extends TypeAdapter<Tasks> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Tasks()
-      ..title = fields[0] as String?
+      ..title = fields[0] as String
       ..description = fields[1] as String?
-      ..timeCreated = fields[2] as DateTime?
+      ..timeCreated = fields[2] as DateTime
       ..deadLine = fields[3] as DateTime?
-      ..done = fields[4] as bool;
+      ..done = fields[4] as bool
+      ..totalSecondsSpent = fields[5] as int;
   }
 
   @override
   void write(BinaryWriter writer, Tasks obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -263,7 +267,9 @@ class TasksAdapter extends TypeAdapter<Tasks> {
       ..writeByte(3)
       ..write(obj.deadLine)
       ..writeByte(4)
-      ..write(obj.done);
+      ..write(obj.done)
+      ..writeByte(5)
+      ..write(obj.totalSecondsSpent);
   }
 
   @override

@@ -19,6 +19,7 @@ import 'BLoC/model_data.dart';
 import 'Screens/home_screen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,13 +46,16 @@ Future<List<Box>> _openBox() async {
     ..registerAdapter(MiscAdapter())
     ..registerAdapter(TasksAdapter());
 
-  var a = await Hive.openBox<ProjectBlueprint>("ProjectBlueprint"); //0
-  var b = await Hive.openBox<RemindersBlueprint>("RemindersBlueprint"); //1
-  var c = await Hive.openBox<NotesBlueprint>("NotesBlueprint"); //2
-  var d =
+  Box a = await Hive.openBox<ProjectBlueprint>("ProjectBlueprint"); //0
+  // a.clear();
+  Box b = await Hive.openBox<RemindersBlueprint>("RemindersBlueprint"); //1
+  Box c = await Hive.openBox<NotesBlueprint>("NotesBlueprint"); //2
+  Box d =
       await Hive.openBox<NotificationsBlueprint>("NotificationsBlueprint"); //3
-  var e = await Hive.openBox<Misc>("Misc"); //4
-  var f = await Hive.openBox<Tasks>("Tasks"); //5
+  Box e = await Hive.openBox<Misc>("Misc"); //4
+  Box f = await Hive.openBox<Tasks>("Tasks"); //5
+  // f.clear();
+
   Box etcBox = await Hive.openBox("allDataBox");
 
   boxList..add(a)..add(b)..add(c)..add(d)..add(e)..add(f)..add(etcBox);

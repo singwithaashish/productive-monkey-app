@@ -26,3 +26,9 @@ final List<String> avatars = [
   "Assets/8.png",
   "Assets/9.png",
 ];
+
+final List<Color> priorityColors = [
+  Colors.cyan,
+  Colors.greenAccent,
+  Colors.redAccent.shade700
+];

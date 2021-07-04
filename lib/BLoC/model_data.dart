@@ -4,7 +4,7 @@ part 'model_data.g.dart';
 @HiveType(typeId: 0)
 class ProjectBlueprint {
   @HiveField(0)
-  String? projectName;
+  String projectName = " ";
 
   @HiveField(1)
   int totalTasks = 0;
@@ -22,13 +22,16 @@ class ProjectBlueprint {
   int priority = 0; //0 - low 3 - high
 
   @HiveField(6)
-  List<String>? allTasks;
+  List<String> allTasks = [];
 
   @HiveField(7)
-  List<String>? allTasksDone;
+  List<String> allTasksDone = [];
 
   @HiveField(8)
   String? projectDescription;
+
+  @HiveField(9)
+  int totalSecondsSpent = 0; //its in seconds
 }
 
 @HiveType(typeId: 1)
@@ -83,16 +86,19 @@ class Misc {
 @HiveType(typeId: 5)
 class Tasks {
   @HiveField(0)
-  String? title;
+  String title = " ";
 
   @HiveField(1)
   String? description;
 
   @HiveField(2)
-  DateTime? timeCreated;
+  DateTime timeCreated = DateTime.now();
 
   @HiveField(3)
   DateTime? deadLine;
   @HiveField(4)
   bool done = false;
+
+  @HiveField(5)
+  int totalSecondsSpent = 0;
 }

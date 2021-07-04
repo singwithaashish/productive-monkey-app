@@ -148,20 +148,32 @@ Widget viewTasks(Tasks tsktsk, int index) {
             style: TextStyle(color: Colors.grey),
           )),
           Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: cPrimaryColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                "⏰ ${DateTime.now().difference(tsktsk.deadLine!).inHours}",
-                style: aLittleBetter,
-              ))
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: cPrimaryColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              "⏰ ${DateTime.now().difference(tsktsk.deadLine!).inHours}",
+              style: aLittleBetter,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: cThemeColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              "🕛 ${Duration(seconds: tsktsk.totalSecondsSpent).toString().split('.')[0]}",
+              style: aLittleBetter,
+            ),
+          )
         ]),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            tsktsk.title ?? 'NO TITLE',
+            tsktsk.title,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),
@@ -234,6 +246,25 @@ void showAddStuffPopup(BuildContext context) {
   DateTime ddline = DateTime.now().add(Duration(days: 30));
   BLoC bl = Provider.of<BLoC>(context, listen: false);
   bool showTf = true, ddlinePicked = false;
+
+  void _onAdded(String what, StateSetter setState) {
+    alt.add(what);
+    tec.clear();
+    if (bl.currentPageIndex == 0) {
+      if (bl.currentScreenIndex == 2) {
+        if (alt.length == 2) {
+          showTf = false;
+        }
+      } else {
+        if (alt.length > 0) {
+          //just need the title
+          showTf = false;
+        }
+      }
+    }
+    setState(() {});
+  }
+
   showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -263,29 +294,22 @@ void showAddStuffPopup(BuildContext context) {
                     TextField(
                       // maxLines: 10,
                       decoration: InputDecoration(
-                          hintText: alt.length == 0
-                              ? "Enter Title"
-                              : alt.length == 1
-                                  ? "A few words"
-                                  : "Enter Tasks",
-                          helperText: "Press ENTER to ADD"),
+                        hintText: alt.length == 0
+                            ? "Enter Title"
+                            : alt.length == 1
+                                ? "A few words"
+                                : "Enter Tasks",
+                        helperText: "Press ENTER to ADD",
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _onAdded(tec.text, setState);
+                          },
+                          icon: Icon(Icons.add),
+                        ),
+                      ),
                       controller: tec,
                       onSubmitted: (va) {
-                        alt.add(va);
-                        tec.clear();
-                        if (bl.currentPageIndex == 0) {
-                          if (bl.currentScreenIndex == 2) {
-                            if (alt.length == 2) {
-                              showTf = false;
-                            }
-                          } else {
-                            if (alt.length > 0) {
-                              //just need the title
-                              showTf = false;
-                            }
-                          }
-                        }
-                        setState(() {});
+                        _onAdded(va, setState);
                       },
                     ),
                   // we now need a clock for datetime selection

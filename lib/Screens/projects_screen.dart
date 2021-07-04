@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:productive_monk/BLoC/bloc.dart';
 import 'package:productive_monk/BLoC/model_data.dart';
+import 'package:productive_monk/Screens/SubScreen/project_view.dart';
 import 'package:productive_monk/constants.dart';
 import 'package:productive_monk/main.dart';
 
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 class ProjectsScreen extends StatelessWidget {
   ProjectsScreen({Key? key}) : super(key: key);
   // final TextEditingController PrjTskTxt = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BLoC>(builder: (context, bl, child) {
@@ -23,113 +25,89 @@ class ProjectsScreen extends StatelessWidget {
         children: List.generate(boxList[0].length, (index) {
           List<ProjectBlueprint> alps =
               boxList[0].values.cast<ProjectBlueprint>().toList();
-          return GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) =>
-              //           ProjectView(projectBlueprintIndex: index)),
-              // );
-              // clear the cursor
-              // PrjTskTxt.clear();
-              showDialog(
-                  context: context,
-                  // its a stateful builder so that its
-                  // updated everytime something is added to it
-                  builder: (context) => StatefulBuilder(builder:
-                          (BuildContext context, StateSetter setState) {
-                        return AlertDialog(
-                          title: new Text('TODO'),
-                          content: TaskWidget(
-                            // PrjTskTxt: PrjTskTxt,
-                            index: index,
-                            // alps: alps,
-                            bl: bl,
-                            setState: setState,
-                          ),
-                          actions: <Widget>[
-                            new ElevatedButton(
-                              onPressed: () {
-                                // add element to box with the key
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: cThemeColor),
-                              child: new Text('Delete'),
-                            ),
-                            new ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: cPrimaryColor),
-                              onPressed: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(); // dismisses only the dialog and returns nothing
-                              },
-                              child: new Text('close'),
-                            ),
-                          ],
-                        );
-                      }));
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                // color: alps[index].priority == 0 ? Colors.green : Colors.red,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: const Offset(
-                      5.0,
-                      5.0,
-                    ),
-                    blurRadius: 10.0,
-                    spreadRadius: 2.0,
+          return Hero(
+            tag: "Project hero $index",
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ProjectView(projectBlueprintIndex: index),
                   ),
-                ],
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.purple,
-                    alps[index].priority == 0 ? Colors.green : Colors.red,
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  // color: Colors.purple,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: const Offset(
+                        5.0,
+                        5.0,
+                      ),
+                      blurRadius: 10.0,
+                      spreadRadius: 2.0,
+                    ),
+                  ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.purpleAccent,
+                      priorityColors[alps[index].priority],
+                      Colors.purple,
+                    ],
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset('Assets/priority_1.png'),
+                    Icon(Icons.looks),
+                    Text(
+                      alps[index].projectName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Flexible(
+                      child: Text(
+                        alps[index].projectDescription ?? "",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: LinearProgressIndicator(
+                            backgroundColor: cPrimaryColor,
+                            value: (alps[index].allTasksDone.length /
+                                (alps[index].allTasks.length +
+                                    alps[index].allTasksDone.length)),
+                            // value: 0.6,
+                            minHeight: 10,
+                            color: cPrimaryColor,
+                          ),
+                        ),
+                        Text(
+                            ' ${alps[index].allTasksDone.length}/${(alps[index].allTasks.length + alps[index].allTasksDone.length)}')
+                      ],
+                    )
                   ],
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset('Assets/priority_1.png'),
-                  Text(
-                    alps[index].projectName ?? "none",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    alps[index].projectDescription ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: LinearProgressIndicator(
-                          backgroundColor: cSecondaryColor,
-                          value: ((alps[index].allTasks ?? []).length /
-                              (alps[index].allTasksDone ?? ['']).length),
-                          // value: 0.6,
-                          minHeight: 10,
-                          color: cPrimaryColor,
-                        ),
-                      ),
-                      Text('5/6')
-                    ],
-                  )
-                ],
               ),
             ),
           );
@@ -156,11 +134,36 @@ class TaskWidget extends StatelessWidget {
   final BLoC bl;
   final StateSetter setState;
 
+  void _onTaskEntered() {
+    if (PrjTskTxt.text == '') return;
+    alps[index].allTasks.add(PrjTskTxt.text);
+    ProjectBlueprint tm = alps[index];
+    PrjTskTxt.clear();
+    //get a temp value, modify it with va and putat
+    boxList[0].putAt(index, tm);
+    bl.jnl();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 500,
       height: 600,
+      padding: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.purpleAccent,
+            Colors.blue,
+            Colors.redAccent,
+          ],
+        ),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      ),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Expanded(
           child: ListView.builder(
@@ -168,7 +171,7 @@ class TaskWidget extends StatelessWidget {
                 .values
                 .cast<ProjectBlueprint>()
                 .toList()[index]
-                .allTasks!
+                .allTasks
                 .length,
             itemBuilder: (BuildContext context, int inde) {
               return Dismissible(
@@ -178,19 +181,30 @@ class TaskWidget extends StatelessWidget {
                 ),
                 onDismissed: (dir) {
                   // gotta update at inde, man
-                  alps[index].allTasks!.removeAt(inde);
+                  alps[index].allTasks.removeAt(inde);
                   ProjectBlueprint value = alps[index];
                   // put the updated value back
                   boxList[0].putAt(index, value);
                 },
                 child: Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(10),
-                    // color: cBackgroundColor,
-                    decoration: BoxDecoration(color: Colors.black26),
-                    child: Text(
-                      alps[index].allTasks![inde],
-                    )),
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  // color: cBackgroundColor,
+                  decoration: BoxDecoration(color: Colors.black26),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "#$inde",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      Text(
+                        alps[index].allTasks[inde],
+                        style: aLittleBetter,
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),
@@ -201,16 +215,16 @@ class TaskWidget extends StatelessWidget {
           child: TextField(
             controller: PrjTskTxt,
             onSubmitted: (va) {
-              alps[index].allTasks!.add(va);
-              ProjectBlueprint tm = alps[index];
-              PrjTskTxt.clear();
-              //get a temp value, modify it with va and putat
-              boxList[0].putAt(index, tm);
-              bl.jnl();
-              setState(() {});
+              _onTaskEntered();
             },
             decoration: InputDecoration(
-                hintText: "Add new Taks ..", helperText: "Press ENTER to add"),
+              hintText: "Add new Taks ..",
+              helperText: "Press ENTER to add",
+              suffixIcon: IconButton(
+                onPressed: _onTaskEntered,
+                icon: Icon(Icons.add),
+              ),
+            ),
           ),
         )
       ]),
