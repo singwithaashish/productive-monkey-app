@@ -89,7 +89,7 @@ class BLoC extends ChangeNotifier {
   }
 
 // call this function to schedule notification
-  Future<void> addToNotification(DateTime when, String what) async {
+  Future<void> addToNotification(DateTime when, String what, String id) async {
     boxList[3].add(NotificationsBlueprint()
       ..notificationTitle = what
       ..timeOfAlert = when);
@@ -102,8 +102,10 @@ class BLoC extends ChangeNotifier {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
+    int idd = int.parse(id);
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        3,
+        idd,
         'Productive Monkey', //check if task and say its a reminder or deadline
         '$what',
         tz.TZDateTime.from(

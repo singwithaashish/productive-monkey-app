@@ -82,10 +82,6 @@ class ProgressScreen extends StatelessWidget {
                       "Tasks Completed: ${allUserData.totalTasksDone}",
                       style: aLittleBetter,
                     ),
-                    Text(
-                      "Tasks Cancelled : ${allUserData.totalTasksCancelled}",
-                      style: aLittleBetter,
-                    ),
                   ],
                 ),
                 Row(

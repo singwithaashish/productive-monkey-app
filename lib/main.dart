@@ -12,6 +12,7 @@ import 'package:productive_monk/Screens/SubScreen/tasks_view.dart';
 import 'package:productive_monk/Screens/notification_screen.dart';
 import 'package:productive_monk/Screens/progress_screen.dart';
 import 'package:productive_monk/Screens/projects_screen.dart';
+import 'package:productive_monk/Screens/self_help.dart';
 import 'package:productive_monk/constants.dart';
 import 'package:provider/provider.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
@@ -104,6 +105,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   final List<Widget> allPages = [
     HomeScreen(),
     ProjectsScreen(),
+    SelfHelp(),
     NotificationWidget(),
     ProgressScreen()
   ];
@@ -139,7 +141,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         actions: [
           IconButton(
               onPressed: () {
-                bl.currentPageIndex = 2;
+                bl.currentPageIndex = 3;
                 setState(() {});
               },
               icon: Icon(Icons.notifications))
@@ -175,15 +177,17 @@ class _HomeWidgetState extends State<HomeWidget> {
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
           BottomNavigationBarItem(
+              icon: Icon(Icons.health_and_safety_rounded), label: "Self help"),
+          BottomNavigationBarItem(
               icon: Icon(Icons.notifications), label: 'Notifications'),
           BottomNavigationBarItem(icon: Icon(Icons.circle), label: 'YOU'),
         ],
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         backgroundColor: cBackgroundColor,
         elevation: 0,
-        selectedItemColor: cPrimaryColor,
-        unselectedItemColor: cThemeColor,
+        selectedItemColor: cThemeColor,
+        unselectedItemColor: cPrimaryColor,
         onTap: (index) {
           setState(() {
             bl.currentPageIndex = index;

@@ -181,30 +181,14 @@ class TaskWidget extends StatelessWidget {
                 ),
                 onDismissed: (dir) {
                   // gotta update at inde, man
+                  alps[index].allTasksDone.add(alps[index].allTasks[inde]);
                   alps[index].allTasks.removeAt(inde);
                   ProjectBlueprint value = alps[index];
                   // put the updated value back
                   boxList[0].putAt(index, value);
+                  setState(() {});
                 },
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  // color: cBackgroundColor,
-                  decoration: BoxDecoration(color: Colors.black26),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "#$inde",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text(
-                        alps[index].allTasks[inde],
-                        style: aLittleBetter,
-                      ),
-                    ],
-                  ),
-                ),
+                child: projectTasksText(inde, alps[index].allTasks[inde]),
               );
             },
           ),
@@ -228,6 +212,28 @@ class TaskWidget extends StatelessWidget {
           ),
         )
       ]),
+    );
+  }
+
+  Container projectTasksText(int inde, String text) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      // color: cBackgroundColor,
+      decoration: BoxDecoration(color: Colors.black26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "#$inde",
+            style: TextStyle(color: Colors.grey),
+          ),
+          Text(
+            text,
+            style: aLittleBetter,
+          ),
+        ],
+      ),
     );
   }
 }

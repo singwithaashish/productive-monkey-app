@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 final Color cThemeColor = HexColor("#030A8C"); //red
-final Color cPrimaryColor = HexColor("#D9933D"); //dee blue
+final Color cPrimaryColor =
+    Colors.purpleAccent; //HexColor("#D9933D"); //dee blue
 // final Color cTextColor = Colors.white;
 final Color cSecondaryColor = HexColor("#F27244"); //orange
 final Color cTertiryColor = HexColor("#F29863"); //orangish
@@ -30,5 +31,5 @@ final List<String> avatars = [
 final List<Color> priorityColors = [
   Colors.cyan,
   Colors.greenAccent,
-  Colors.redAccent.shade700
+  Colors.redAccent
 ];
