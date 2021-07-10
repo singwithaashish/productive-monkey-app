@@ -45,7 +45,8 @@ Future<List<Box>> _openBox() async {
     ..registerAdapter(NotesBlueprintAdapter())
     ..registerAdapter(NotificationsBlueprintAdapter())
     ..registerAdapter(MiscAdapter())
-    ..registerAdapter(TasksAdapter());
+    ..registerAdapter(TasksAdapter())
+    ..registerAdapter(ProcrastinationReasonAdapter());
 
   Box a = await Hive.openBox<ProjectBlueprint>("ProjectBlueprint"); //0
   // a.clear();
@@ -57,9 +58,12 @@ Future<List<Box>> _openBox() async {
   Box f = await Hive.openBox<Tasks>("Tasks"); //5
   // f.clear();
 
-  Box etcBox = await Hive.openBox("allDataBox");
+  Box etcBox = await Hive.openBox("allDataBox"); // 6
 
-  boxList..add(a)..add(b)..add(c)..add(d)..add(e)..add(f)..add(etcBox);
+  Box g =
+      await Hive.openBox<ProcrastinationReason>("ProcrastinationReason"); //7
+
+  boxList..add(a)..add(b)..add(c)..add(d)..add(e)..add(f)..add(etcBox)..add(g);
   // boxList.add(box_comment);
   return boxList;
 }
@@ -73,12 +77,14 @@ class MyApp extends StatelessWidget {
       providers: [ChangeNotifierProvider.value(value: BLoC())],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: cBackgroundColor,
-            accentColor: cPrimaryColor,
-            backgroundColor: cBackgroundColor,
-            scaffoldBackgroundColor: cBackgroundColor,
-          ),
+          // theme: ThemeData(
+          //   primaryColor: cBackgroundColor,
+          //   accentColor: cPrimaryColor,
+          //   backgroundColor: cBackgroundColor,
+          //   scaffoldBackgroundColor: cBackgroundColor,
+          // ),
+          // darkTheme: ThemeData(textTheme: TextTheme(bodyText1: )),
+
           home: Consumer<BLoC>(builder: (context, bl, child) {
             return boxList[6].get("showStartScreen") ?? true
                 ? StartScreen()
@@ -146,7 +152,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               },
               icon: Icon(Icons.notifications))
         ],
-        // backgroundColor: cThemeColor,
+        // backgroundColor: cPrimaryColor,
         leading: Image.asset(
           avatars[boxList[4].values.cast<Misc>().first.avatarIndex],
           fit: BoxFit.cover,
@@ -184,9 +190,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         ],
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        backgroundColor: cBackgroundColor,
+        // backgroundColor: cPrimaryColor,
         elevation: 0,
-        selectedItemColor: cThemeColor,
+        selectedItemColor: cSecondaryColor,
         unselectedItemColor: cPrimaryColor,
         onTap: (index) {
           setState(() {

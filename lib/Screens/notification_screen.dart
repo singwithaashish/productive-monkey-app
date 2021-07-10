@@ -43,28 +43,27 @@ Widget notificationView(int index) {
       // height: 100,
       // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            offset: const Offset(
-              5.0,
-              5.0,
-            ),
-            blurRadius: 10.0,
-            spreadRadius: 2.0,
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          offset: const Offset(
+            5.0,
+            5.0,
           ),
-        ],
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Colors.purpleAccent,
-            // priorityColors[alps[index].priority],
-            Colors.redAccent,
-          ],
+          blurRadius: 10.0,
+          spreadRadius: 2.0,
         ),
-      ),
+      ], color: cPrimaryColor
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.centerRight,
+          //   colors: [
+          //     Colors.purpleAccent,
+          //     // priorityColors[alps[index].priority],
+          //     Colors.redAccent,
+          //   ],
+          // ),
+          ),
       child: Row(
         children: [
           Expanded(

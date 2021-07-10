@@ -95,8 +95,10 @@ Widget viewTasks(Tasks tsktsk, int index, BuildContext context) {
                 begin: Alignment.topLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  Colors.purpleAccent,
-                  Colors.blue,
+                  // Colors.purpleAccent,
+                  cPrimaryColor,
+                  // Colors.blue,
+                  cThemeColor
                 ],
               ),
             ),
@@ -154,7 +156,7 @@ Widget viewTasks(Tasks tsktsk, int index, BuildContext context) {
             spreadRadius: 2.0,
           ),
         ],
-        color: Colors.white,
+        color: cPrimaryColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -193,10 +195,16 @@ Widget viewTasks(Tasks tsktsk, int index, BuildContext context) {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               tsktsk.title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white),
             ),
           ),
-          Text(tsktsk.description ?? '')
+          Text(
+            tsktsk.description ?? '',
+            style: TextStyle(color: Colors.white),
+          )
         ],
       ),
     ),

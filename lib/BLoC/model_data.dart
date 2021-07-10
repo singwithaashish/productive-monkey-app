@@ -102,3 +102,15 @@ class Tasks {
   @HiveField(5)
   int totalSecondsSpent = 0;
 }
+
+@HiveType(typeId: 6)
+class ProcrastinationReason {
+  @HiveField(0)
+  String reason = " ";
+  @HiveField(1)
+  int occurence = 0;
+  @HiveField(2)
+  DateTime dateCreated = DateTime.now();
+  @HiveField(3)
+  DateTime dateOfLastOccurence = DateTime.now();
+}

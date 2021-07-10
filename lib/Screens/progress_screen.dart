@@ -45,7 +45,7 @@ class ProgressScreen extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Colors.purple, Colors.blue],
+                colors: [Colors.purple, cPrimaryColor],
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -118,11 +118,12 @@ class ProgressScreen extends StatelessWidget {
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Colors.purple, Colors.blue],
-              ),
+              // gradient: LinearGradient(
+              //   begin: Alignment.centerLeft,
+              //   end: Alignment.centerRight,
+              //   colors: [Colors.purple, Colors.blue],
+              // ),
+              color: cPrimaryColor,
             ),
             child: Column(
               children: [
@@ -134,12 +135,14 @@ class ProgressScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: cThemeColor),
                       onPressed: () {
                         // ! navigate to app screen
                       },
                       child: Text("Rating our app"),
                     ),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: cThemeColor),
                         onPressed: () {
                           // !sharing
                         },

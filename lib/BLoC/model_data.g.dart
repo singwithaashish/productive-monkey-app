@@ -282,3 +282,45 @@ class TasksAdapter extends TypeAdapter<Tasks> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class ProcrastinationReasonAdapter extends TypeAdapter<ProcrastinationReason> {
+  @override
+  final int typeId = 6;
+
+  @override
+  ProcrastinationReason read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ProcrastinationReason()
+      ..reason = fields[0] as String
+      ..occurence = fields[1] as int
+      ..dateCreated = fields[2] as DateTime
+      ..dateOfLastOccurence = fields[3] as DateTime;
+  }
+
+  @override
+  void write(BinaryWriter writer, ProcrastinationReason obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.reason)
+      ..writeByte(1)
+      ..write(obj.occurence)
+      ..writeByte(2)
+      ..write(obj.dateCreated)
+      ..writeByte(3)
+      ..write(obj.dateOfLastOccurence);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProcrastinationReasonAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
