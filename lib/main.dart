@@ -13,7 +13,9 @@ import 'package:productive_monk/Screens/notification_screen.dart';
 import 'package:productive_monk/Screens/progress_screen.dart';
 import 'package:productive_monk/Screens/projects_screen.dart';
 import 'package:productive_monk/Screens/self_help.dart';
+import 'package:productive_monk/Screens/settings_screen.dart';
 import 'package:productive_monk/constants.dart';
+import 'package:productive_monk/reusable_widgets.dart';
 import 'package:provider/provider.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 import 'BLoC/model_data.dart';
@@ -136,7 +138,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       } else if (bl.currentPageIndex == 1) {
         return "new Project";
       } else {
-        return "";
+        return "Drags";
       }
     }
 
@@ -160,7 +162,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         title: Text('Hello, ${boxList[4].values.cast<Misc>().first.username}'),
       ),
       body: allPages[bl.currentPageIndex],
-      floatingActionButton: bl.currentPageIndex <= 1
+      floatingActionButton: bl.currentPageIndex <= 2
           ? FloatingActionButton.extended(
               label: Row(
                 children: [
@@ -171,6 +173,9 @@ class _HomeWidgetState extends State<HomeWidget> {
               onPressed: () {
                 showAddStuffPopup(context);
 
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => Settings(),
+                // ));
                 //*?!Todo: kj
               },
             )

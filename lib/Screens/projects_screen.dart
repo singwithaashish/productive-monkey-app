@@ -37,86 +37,91 @@ class ProjectsScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  // color: Colors.purple,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: const Offset(
-                        5.0,
-                        5.0,
-                      ),
-                      blurRadius: 10.0,
-                      spreadRadius: 2.0,
-                    ),
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Colors.purpleAccent,
-                      priorityColors[alps[index].priority],
-                      Colors.purple,
-                    ],
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset('Assets/priority_1.png'),
-                    Icon(Icons.looks),
-                    Text(
-                      alps[index].projectName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Flexible(
-                      child: Text(
-                        alps[index].projectDescription ?? "",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            backgroundColor: cPrimaryColor,
-                            value: (alps[index].allTasksDone.length /
-                                (alps[index].allTasks.length +
-                                    alps[index].allTasksDone.length)),
-                            // value: 0.6,
-                            minHeight: 10,
-                            color: cPrimaryColor,
-                          ),
-                        ),
-                        Text(
-                            ' ${alps[index].allTasksDone.length}/${(alps[index].allTasks.length + alps[index].allTasksDone.length)}')
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              child: projectBox(alps, index),
             ),
           );
         }),
       );
     });
   }
+
+  Container projectBox(List<ProjectBlueprint> alps, int index) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        // color: Colors.purple,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: const Offset(
+              5.0,
+              5.0,
+            ),
+            blurRadius: 10.0,
+            spreadRadius: 2.0,
+          ),
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.purpleAccent,
+            priorityColors[alps[index].priority],
+            Colors.purple,
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset('Assets/priority_1.png'),
+          Icon(Icons.looks),
+          Text(
+            alps[index].projectName,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Colors.white,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Flexible(
+            child: Text(
+              alps[index].projectDescription ?? "",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: LinearProgressIndicator(
+                  backgroundColor: cPrimaryColor,
+                  value: (alps[index].allTasksDone.length /
+                      (alps[index].allTasks.length +
+                          alps[index].allTasksDone.length)),
+                  // value: 0.6,
+                  minHeight: 10,
+                  color: cPrimaryColor,
+                ),
+              ),
+              Text(
+                  ' ${alps[index].allTasksDone.length}/${(alps[index].allTasks.length + alps[index].allTasksDone.length)}')
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }
 
+// shows all tasks in this project
 class TaskWidget extends StatelessWidget {
   TaskWidget({
     Key? key,
@@ -153,8 +158,8 @@ class TaskWidget extends StatelessWidget {
       padding: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomLeft,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
             Colors.purpleAccent,
             Colors.blue,
